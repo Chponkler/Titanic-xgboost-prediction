@@ -50,3 +50,20 @@ plt.show()
 
 # Сохранение модели
 model.save_model('titanic_xgboost.json')
+
+
+# Пример нового пассажира
+new_passenger = pd.DataFrame({
+    'Pclass': [1],                      # Класс билета (1, 2, 3)
+    'Sex': [1],                         # 1 = male, 0 = female
+    'Age': [26],                        # Возраст
+    'Siblings/Spouses Aboard': [1],     # Аналог SibSp
+    'Parents/Children Aboard': [2],     # Аналог Parch
+    'Fare': [100]                      # Стоимость билета
+})
+
+# Загрузка модели и предсказание
+model = xgb.XGBClassifier()
+model.load_model('titanic_xgboost.json')
+pred = model.predict(new_passenger)
+print("Выжил" if pred[0] == 1 else "Не выжил")
